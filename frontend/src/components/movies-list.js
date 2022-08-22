@@ -101,7 +101,7 @@ const MoviesList = props => {
       find(searchRating, "rated")
     }
   }
-
+if (currentPage==0){
   return (
     <div className="App">
       <div>
@@ -176,7 +176,7 @@ const MoviesList = props => {
           
           <Button variant="link" onClick={() => { setCurrentPage(currentPage + 1) }}>
             
-            <h5 className="hover">Get next {entriesPerPage} results</h5>
+            <h5 className="hover">Get next {entriesPerPage} results.</h5>
             
           </Button>
           </h5>
@@ -184,6 +184,97 @@ const MoviesList = props => {
       </div>
     </div>
   );
+} else {
+  return (
+    <div className="App">
+      <div>
+        <div className='w3-container' >
+          <h1>Welcome to Movie Reviews Website</h1>
+          <h3>A place for reviewing movies</h3>
+        </div>
+        <Container >
+          <Form>
+            <Row>
+              <Col>
+                <Form.Group>
+                  <Form.Control
+                    type="text"
+                    placeholder="Search by title"
+                    value={searchTitle}
+                    onChange={onChangeSearchTitle}
+                  />
+                </Form.Group>
+                <Button
+                  variant="primary"
+                  type="button"
+                  onClick={findByTitle}
+                >
+                  Search
+                </Button>
+              </Col>
+              <Col>
+                <Form.Group>
+                  <Form.Control as="select" onChange={onChangeSearchRating} >
+                    {ratings.map(rating => {
+                      return (
+                        <option value={rating}>{rating}</option>
+                      )
+                    })}
+                  </Form.Control>
+                </Form.Group>
+                <Button
+                  variant="primary"
+                  type="button"
+                  onClick={findByRating}
+                >
+                  Search
+                </Button>
+              </Col>
+            </Row>
+          </Form>
+
+          <Row>
+            {movies.map((movie) => {
+              return (
+                <Col>
+                  <Card style={{ width: '18rem' }}>
+                    <Card.Img src={movie.poster + "/100px180"} />
+                    <Card.Body>
+                      <Card.Title>{movie.title}</Card.Title>
+                      <Card.Text>
+                        Rating: {movie.rated}
+                      </Card.Text>
+                      <Card.Text>
+                        {movie.plot}
+                      </Card.Text>
+                      <Link to={"/movies/" + movie._id} >View Reviews</Link>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              )
+            })}
+          </Row>
+          <br></br><h5 style={{color:"#70d6f0"}}>
+            <Button variant="link" onClick={()=> setCurrentPage(currentPage-1)}>
+              <h5 className="hover">
+                Get previous {entriesPerPage} results.
+              </h5>
+              </Button>
+              
+          Showing page: {currentPage}.
+          
+          <Button variant="link" onClick={() => { setCurrentPage(currentPage + 1) }}>
+            
+            <h5 className="hover">Get next {entriesPerPage} results.</h5>
+            
+          </Button>
+          </h5>
+        </Container>
+      </div>
+    </div>
+  );
+}
+  
 }
 
 export default MoviesList;
